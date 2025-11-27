@@ -2,9 +2,9 @@ import { PricingPlan, Testimonial, FaqItem } from './types';
 
 export const CONTACT_PHONE = "38765238217";
 export const CONTACT_WHATSAPP_LINK = `https://wa.me/${CONTACT_PHONE}`;
-// Viber links usually require the %2B encoding for the plus sign or just the number depending on device, standardizing here.
-export const CONTACT_VIBER_LINK = `viber://chat?number=%2B${CONTACT_PHONE}`;
-export const CONTACT_TELEGRAM_LINK = `https://t.me/+${CONTACT_PHONE}`;
+// Viber Business Channel Link
+export const CONTACT_VIBER_LINK = `https://connect.viber.com/en/business/441c3c6e-094f-11f0-9ffd-c655692b991d`;
+export const CONTACT_TELEGRAM_LINK = `https://t.me/BalkanTvGuru`;
 
 export const NAV_LINKS = [
   { name: 'Početna', href: '#home' },
@@ -83,6 +83,38 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'Švedska',
     date: '28. April 2024.',
     text: 'Prezadovoljan sam uslugom. Setup je bio gotov za 10 minuta uz pomoć podrške na WhatsAppu. Cijena za godinu dana je smiješna za ovaj kvalitet.'
+  },
+  {
+    id: '4',
+    name: 'Haris',
+    initial: 'Z',
+    location: 'SAD',
+    date: '10. Maj 2024.',
+    text: 'Gledam naše kanale iz Amerike bez ikakvih problema. Stabilnost je odlična s obzirom na udaljenost. Vidioteka se stalno dopunjava.'
+  },
+  {
+    id: '5',
+    name: 'Damir',
+    initial: 'B',
+    location: 'Švicarska',
+    date: '15. Maj 2024.',
+    text: 'Sve radi top. Imao sam problema sa postavljanjem na Smart TV-u, ali mi je Guru tim pomogao korak po korak. Hvala vam!'
+  },
+  {
+    id: '6',
+    name: 'Goran',
+    initial: 'M',
+    location: 'Hrvatska',
+    date: '02. Jun 2024.',
+    text: 'Kvalitet slike na sportskim kanalima je pravi HD. Nema onog dosadnog bufferovanja u toku utakmice. Produžio sam pretplatu na godinu dana.'
+  },
+  {
+    id: '7',
+    name: 'Elena',
+    initial: 'R',
+    location: 'Slovenija',
+    date: '20. Jun 2024.',
+    text: 'Odlična usluga i ljubazna podrška. Najviše mi se sviđa opcija vraćanja unazad jer često propustim omiljene serije zbog posla.'
   }
 ];
 
@@ -105,7 +137,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Kako se vrši plaćanje?",
-    answer: "Kontaktirajte nas putem WhatsAppa ili Vibera. Podržavamo: PayPal, Western Union, Ria Transfer, MoneyGram, Crypto, Abon, Xbon, uplatu u kladionici i bankovnu karticu."
+    answer: "Kontaktirajte nas putem WhatsAppa ili Vibera. Podržavamo: Bankovnu karticu, PayPal, Crypto, Western Union / Ria / MoneyGram, Abon, Xbon i uplatu u Kladionici."
   }
 ];
 
@@ -122,8 +154,8 @@ Ključne informacije o servisu koje moraš znati:
 4. **Uređaji:** Radimo na Smart TV, Android Box, Mag, PC, Mobitel, Tablet, Firestick. Podržavamo aplikacije kao što su Tivimate, IPTV Smarters, Smart IPTV, NET IPTV.
 5. **Internet:** Preporučujemo brzinu od minimalno 15 Mbps stabilne konekcije za stabilan rad.
 6. **Reselleri:** Nudimo reseller panele. Imamo admin tim podršku i unlimited panel opciju za iskusne prodavce.
-7. **Plaćanje:** PayPal, Western Union, Ria, MoneyGram, Crypto, Abon, Xbon, Kladionica, Bankovna kartica.
-8. **Kontakt:** Za sve uplate i aktivacije korisnik se mora javiti na WhatsApp ili Viber.
+7. **Plaćanje:** Bankovna kartica, PayPal, Crypto, Western Union, Ria, MoneyGram, Abon, Xbon i Kladionica.
+8. **Kontakt:** Za sve uplate i aktivacije korisnik se mora javiti na WhatsApp ili Viber (Broj: +387 65 238 217) ili Telegram @BalkanTvGuru.
 
 Ton komunikacije:
 - Budi ljubazan, profesionalan i ulivaj povjerenje.

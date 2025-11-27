@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Menu, X, Tv, Film, PlayCircle, Smartphone, Wifi, CreditCard, CheckCircle, 
-  MessageCircle, Star, ShieldCheck, Zap, Globe, Server, UserCheck, Users, BarChart, ChevronDown, ChevronUp
+  MessageCircle, Star, ShieldCheck, Zap, Globe, Server, UserCheck, Users, BarChart, ChevronDown, ChevronUp, Send, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { 
   CONTACT_WHATSAPP_LINK, CONTACT_VIBER_LINK, CONTACT_TELEGRAM_LINK, NAV_LINKS, PRICING_PLANS, 
@@ -11,7 +11,7 @@ import Chatbot from './components/Chatbot';
 import { FaqItem } from './types';
 
 // Helper Component for FAQ Accordion
-const FaqAccordionItem = ({ item }: { item: FaqItem }) => {
+const FaqAccordionItem: React.FC<{ item: FaqItem }> = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -39,6 +39,29 @@ const FaqAccordionItem = ({ item }: { item: FaqItem }) => {
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+  
+  // Testimonial Carousel State
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-blue-100 selection:text-blue-800">
@@ -49,7 +72,18 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <a href="#home" className="flex items-center gap-2 group block min-w-[150px]">
-              <img src="logo.png" alt="BalkanTvGuru" className="h-14 w-auto object-contain hover:opacity-90 transition-opacity" />
+              {!logoError ? (
+                <img 
+                  src="logo.jpg" 
+                  alt="BalkanTvGuru" 
+                  className="h-14 w-auto object-contain hover:opacity-90 transition-opacity" 
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
+                  BalkanTvGuru
+                </span>
+              )}
             </a>
 
             {/* Desktop Nav */}
@@ -147,6 +181,13 @@ export default function App() {
               >
                 Pogledaj Pakete
               </a>
+            </div>
+
+            {/* Simplified Contact Section */}
+            <div className="mt-10 flex flex-col items-center gap-3">
+              <p className="text-slate-900 font-bold text-lg md:text-2xl text-center px-4">
+                Kontakt WhatsApp/Viber na: <span className="text-blue-600">+387 65 238 217</span>
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-12 pt-8 text-slate-500 text-sm md:text-base font-medium max-w-3xl mx-auto">
@@ -264,30 +305,76 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- TESTIMONIALS --- */}
+      {/* --- TESTIMONIALS (CAROUSEL) --- */}
       <section id="testimonials" className="py-20 bg-slate-50">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold text-center mb-16">Zadovoljni Korisnici</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.id} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white text-xl shadow-md">
-                    {t.initial}
-                  </div>
-                  <div>
-                    <div className="font-bold text-slate-900">{t.name}</div>
-                    <div className="text-xs text-slate-500 font-medium uppercase tracking-wide">{t.location}</div>
-                  </div>
-                  <div className="ml-auto text-xs text-slate-400">
-                    {t.date}
-                  </div>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed">"{t.text}"</p>
-                <div className="flex text-yellow-400 mt-4">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-                </div>
+          
+          <div className="relative max-w-6xl mx-auto">
+            {/* Left Button */}
+            <button 
+              onClick={prevTestimonial}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-12 z-20 bg-white p-3 rounded-full shadow-lg text-slate-600 hover:text-blue-600 hover:scale-110 transition-all border border-slate-100"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            {/* Carousel Container */}
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-out"
+                style={{ 
+                  // Move by: Index * (100% / ItemsPerScreen)
+                  transform: `translateX(-${currentTestimonialIndex * (100 / (isDesktop ? 3 : 1))}%)`,
+                }}
+              >
+                  {TESTIMONIALS.map((t) => (
+                    <div 
+                      key={t.id} 
+                      className="min-w-full md:min-w-[33.333%] px-4 box-border"
+                      style={{ flexShrink: 0 }}
+                    >
+                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-full flex flex-col justify-between hover:shadow-md transition-shadow">
+                          <div>
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                  <div className="font-bold text-lg text-slate-900">{t.name}</div>
+                                  <div className="text-xs text-blue-600 font-bold uppercase tracking-wide">{t.location}</div>
+                                </div>
+                                <div className="flex text-yellow-400">
+                                  {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                                </div>
+                            </div>
+                            <p className="text-slate-600 text-sm leading-relaxed italic">"{t.text}"</p>
+                          </div>
+                        </div>
+                    </div>
+                  ))}
               </div>
+            </div>
+
+             {/* Right Button */}
+            <button 
+              onClick={nextTestimonial}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-12 z-20 bg-white p-3 rounded-full shadow-lg text-slate-600 hover:text-blue-600 hover:scale-110 transition-all border border-slate-100"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+          
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-8">
+            {TESTIMONIALS.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentTestimonialIndex(idx)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  idx === currentTestimonialIndex ? 'bg-blue-600 w-4' : 'bg-slate-300 hover:bg-slate-400'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
             ))}
           </div>
         </div>
@@ -391,7 +478,17 @@ export default function App() {
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-2 text-white mb-6">
                  <a href="#home">
-                   <img src="logo.png" alt="BalkanTvGuru" className="h-10 w-auto brightness-0 invert hover:opacity-80 transition-opacity" />
+                   {/* Fallback for footer logo as well */}
+                   {!logoError ? (
+                     <img 
+                       src="logo.jpg" 
+                       alt="BalkanTvGuru" 
+                       className="h-10 w-auto hover:opacity-80 transition-opacity" 
+                       onError={() => setLogoError(true)}
+                     />
+                   ) : (
+                     <span className="text-xl font-bold text-white">BalkanTvGuru</span>
+                   )}
                  </a>
               </div>
               <p className="text-sm leading-relaxed mb-6">
@@ -417,20 +514,21 @@ export default function App() {
               <h4 className="text-white font-bold mb-6 text-lg">Kontakt</h4>
               <ul className="space-y-4 text-sm">
                 <li>
-                  <a href={CONTACT_WHATSAPP_LINK} className="flex items-center gap-3 hover:text-green-400 transition-colors">
+                  <a href={CONTACT_WHATSAPP_LINK} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-green-400 transition-colors">
                     <div className="bg-slate-800 p-2 rounded-lg"><MessageCircle size={18} /></div>
                     WhatsApp
                   </a>
                 </li>
                 <li>
-                  <a href={CONTACT_VIBER_LINK} className="flex items-center gap-3 hover:text-purple-400 transition-colors">
+                  {/* Updated to use the Business Link */}
+                  <a href={CONTACT_VIBER_LINK} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-purple-400 transition-colors">
                     <div className="bg-slate-800 p-2 rounded-lg"><Smartphone size={18} /></div>
                     Viber
                   </a>
                 </li>
                 <li>
-                  <a href={CONTACT_TELEGRAM_LINK} className="flex items-center gap-3 hover:text-blue-400 transition-colors">
-                    <div className="bg-slate-800 p-2 rounded-lg"><MessageCircle size={18} /></div>
+                  <a href={CONTACT_TELEGRAM_LINK} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-blue-400 transition-colors">
+                    <div className="bg-slate-800 p-2 rounded-lg"><Send size={18} /></div>
                     Telegram
                   </a>
                 </li>
@@ -439,26 +537,36 @@ export default function App() {
 
             <div>
               <h4 className="text-white font-bold mb-6 text-lg">Načini Plaćanja</h4>
-              <div className="flex flex-wrap gap-3 mb-4">
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">PayPal</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Western Union</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Ria</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">MoneyGram</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Crypto</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Abon</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Xbon</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Kladionica</div>
-                 <div className="bg-slate-800 p-2 rounded text-xs text-white">Bankovna kartica</div>
-              </div>
-              <p className="text-xs text-slate-500">Sigurna i brza aktivacija nakon uplate.</p>
+              <ul className="space-y-2.5 text-sm">
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Bankovna kartica
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> PayPal
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Crypto
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5"></span> Western Union / Ria / MoneyGram
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Abon
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Xbon
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Kladionica
+                </li>
+              </ul>
             </div>
           </div>
           
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
             <div>&copy; {new Date().getFullYear()} BalkanTvGuru. Sva prava zadržana.</div>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-white">Pravila korištenja</a>
-              <a href="#" className="hover:text-white">Politika privatnosti</a>
+               {/* Removed Privacy and Terms links as requested */}
             </div>
           </div>
         </div>

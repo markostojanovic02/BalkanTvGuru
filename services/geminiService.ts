@@ -22,7 +22,6 @@ export const getChatResponse = async (
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
         temperature: 0.7,
-        maxOutputTokens: 250, 
       },
       history: history.map(h => ({
         role: h.role,
