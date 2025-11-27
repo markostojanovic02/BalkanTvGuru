@@ -43,11 +43,19 @@ export default function App() {
   
   // Testimonial Carousel State
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
 
+  // Precise sizing logic
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
+      const width = window.innerWidth;
+      if (width < 768) {
+        setItemsPerPage(1); // Mobile
+      } else if (width >= 768 && width < 1280) {
+        setItemsPerPage(2); // Tablet/Laptop - WIDER CARDS
+      } else {
+        setItemsPerPage(3); // Large Desktop
+      }
     };
     
     handleResize(); // Initial check
@@ -325,15 +333,20 @@ export default function App() {
               <div 
                 className="flex transition-transform duration-500 ease-out"
                 style={{ 
-                  // Move by: Index * (100% / ItemsPerScreen)
-                  transform: `translateX(-${currentTestimonialIndex * (100 / (isDesktop ? 3 : 1))}%)`,
+                  // Precise logic: Move by (CurrentIndex * (100 / ItemsPerPage))
+                  transform: `translateX(-${currentTestimonialIndex * (100 / itemsPerPage)}%)`,
                 }}
               >
                   {TESTIMONIALS.map((t) => (
                     <div 
                       key={t.id} 
-                      className="min-w-full md:min-w-[33.333%] px-4 box-border"
-                      style={{ flexShrink: 0 }}
+                      className="px-4 box-border"
+                      style={{ 
+                        // Explicit width based on items per page
+                        width: `${100 / itemsPerPage}%`, 
+                        minWidth: `${100 / itemsPerPage}%`,
+                        flexShrink: 0 
+                      }}
                     >
                         <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-full flex flex-col justify-between hover:shadow-md transition-shadow">
                           <div>
@@ -346,7 +359,7 @@ export default function App() {
                                   {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
                                 </div>
                             </div>
-                            <p className="text-slate-600 text-sm leading-relaxed italic">"{t.text}"</p>
+                            <p className="text-slate-600 text-sm leading-relaxed italic whitespace-normal break-words">"{t.text}"</p>
                           </div>
                         </div>
                     </div>
@@ -365,7 +378,7 @@ export default function App() {
           </div>
           
           {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-8 flex-wrap">
             {TESTIMONIALS.map((_, idx) => (
               <button
                 key={idx}

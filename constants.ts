@@ -63,7 +63,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '1',
     name: 'Marko',
-    initial: 'P',
+    initial: 'M',
     location: 'Njemačka',
     date: '12. Mart 2024.',
     text: 'Koristim BalkanTvGuru već 6 mjeseci. Slika je kristalno jasna, nema sjeckanja čak ni kad su utakmice Lige Šampiona. Svaka preporuka!'
@@ -71,7 +71,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '2',
     name: 'Ivan',
-    initial: 'S',
+    initial: 'I',
     location: 'Austrija',
     date: '05. April 2024.',
     text: 'Probao sam mnogo listi, ali ova je najbolja. Vidioteka je ogromna, djeca uživaju u crtićima, a ja u sportu. Podrška odgovara odmah.'
@@ -79,7 +79,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '3',
     name: 'Adnan',
-    initial: 'K',
+    initial: 'A',
     location: 'Švedska',
     date: '28. April 2024.',
     text: 'Prezadovoljan sam uslugom. Setup je bio gotov za 10 minuta uz pomoć podrške na WhatsAppu. Cijena za godinu dana je smiješna za ovaj kvalitet.'
@@ -87,7 +87,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '4',
     name: 'Haris',
-    initial: 'Z',
+    initial: 'H',
     location: 'SAD',
     date: '10. Maj 2024.',
     text: 'Gledam naše kanale iz Amerike bez ikakvih problema. Stabilnost je odlična s obzirom na udaljenost. Vidioteka se stalno dopunjava.'
@@ -95,7 +95,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '5',
     name: 'Damir',
-    initial: 'B',
+    initial: 'D',
     location: 'Švicarska',
     date: '15. Maj 2024.',
     text: 'Sve radi top. Imao sam problema sa postavljanjem na Smart TV-u, ali mi je Guru tim pomogao korak po korak. Hvala vam!'
@@ -103,7 +103,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '6',
     name: 'Goran',
-    initial: 'M',
+    initial: 'G',
     location: 'Hrvatska',
     date: '02. Jun 2024.',
     text: 'Kvalitet slike na sportskim kanalima je pravi HD. Nema onog dosadnog bufferovanja u toku utakmice. Produžio sam pretplatu na godinu dana.'
@@ -111,7 +111,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: '7',
     name: 'Elena',
-    initial: 'R',
+    initial: 'E',
     location: 'Slovenija',
     date: '20. Jun 2024.',
     text: 'Odlična usluga i ljubazna podrška. Najviše mi se sviđa opcija vraćanja unazad jer često propustim omiljene serije zbog posla.'
