@@ -263,11 +263,11 @@ export default function App() {
             <p className="text-slate-600">Premium usluga po pristupačnim cijenama. Plaćanje je sigurno i jednostavno.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
             {PRICING_PLANS.map((plan) => (
               <div 
                 key={plan.id}
-                className={`relative bg-white rounded-3xl p-8 border ${
+                className={`relative bg-white rounded-3xl p-6 border flex flex-col justify-between ${
                   plan.isPopular 
                     ? 'border-blue-600 shadow-2xl scale-105 z-10 bg-gradient-to-b from-white to-blue-50' 
                     : 'border-slate-200 shadow-lg'
@@ -278,22 +278,24 @@ export default function App() {
                     NAJISPLATIVIJE
                   </div>
                 )}
-                <div className="text-center mb-8">
-                  <h3 className="text-lg font-bold text-slate-500 uppercase tracking-wider">{plan.duration}</h3>
-                  <div className="mt-4 flex items-center justify-center gap-2">
-                    <span className="text-slate-400 line-through text-lg">€{plan.oldPrice}</span>
-                    <span className="text-4xl font-extrabold text-slate-900">€{plan.price}</span>
+                <div>
+                  <div className="text-center mb-8">
+                    <h3 className="text-lg font-bold text-slate-500 uppercase tracking-wider">{plan.duration}</h3>
+                    <div className="mt-4 flex items-center justify-center gap-2">
+                      <span className="text-slate-400 line-through text-lg">€{plan.oldPrice}</span>
+                      <span className="text-4xl font-extrabold text-slate-900">€{plan.price}</span>
+                    </div>
                   </div>
+                  
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3 text-slate-700">
+                        <CheckCircle size={20} className="text-green-500 shrink-0 mt-0.5" />
+                        <span className={`text-sm ${feature.includes('GRATIS') ? 'font-bold text-blue-700' : ''}`}>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-700">
-                      <CheckCircle size={20} className="text-green-500 shrink-0 mt-0.5" />
-                      <span className={`text-sm ${feature.includes('GRATIS') ? 'font-bold text-blue-700' : ''}`}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
 
                 <a 
                   href={CONTACT_WHATSAPP_LINK}
@@ -552,7 +554,7 @@ export default function App() {
               <h4 className="text-white font-bold mb-6 text-lg">Načini Plaćanja</h4>
               <ul className="space-y-2.5 text-sm">
                 <li className="flex items-center gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Bankovna kartica
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Bankovna kartica (Stripe)
                 </li>
                 <li className="flex items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> PayPal

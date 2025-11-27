@@ -3,6 +3,13 @@ import { MessageCircle, X, Send, Bot, Sparkles } from 'lucide-react';
 import { getChatResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
+const QUICK_QUESTIONS = [
+  { label: '🚀 Besplatan Test', text: 'Mogu li dobiti besplatan test?' },
+  { label: '💰 Cjenovnik', text: 'Koje su cijene paketa?' },
+  { label: '📺 Popis Kanala', text: 'Koje kanale imate u ponudi?' },
+  { label: '💳 Načini Plaćanja', text: 'Kako mogu platiti?' },
+];
+
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showCallout, setShowCallout] = useState(true);
@@ -28,10 +35,13 @@ const Chatbot: React.FC = () => {
     }
   }, [isOpen]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (textOverride?: string) => {
+    // Determine the text to send: either the override (from button click) or the input state
+    const textToSend = typeof textOverride === 'string' ? textOverride : input;
 
-    const userMessage: ChatMessage = { role: 'user', text: input };
+    if (!textToSend.trim() || isLoading) return;
+
+    const userMessage: ChatMessage = { role: 'user', text: textToSend };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -95,21 +105,38 @@ const Chatbot: React.FC = () => {
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4">
             {messages.map((msg, index) => (
-              <div 
-                key={index} 
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+              <div key={index}>
                 <div 
-                  className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
-                    msg.role === 'user' 
-                      ? 'bg-blue-600 text-white rounded-br-none' 
-                      : 'bg-white text-slate-700 border border-slate-100 rounded-bl-none'
-                  }`}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  {msg.text}
+                  <div 
+                    className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                      msg.role === 'user' 
+                        ? 'bg-blue-600 text-white rounded-br-none' 
+                        : 'bg-white text-slate-700 border border-slate-100 rounded-bl-none'
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
                 </div>
+                
+                {/* Show Quick Questions ONLY after the FIRST bot message */}
+                {index === 0 && msg.role === 'model' && messages.length === 1 && (
+                  <div className="mt-4 grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-bottom-2">
+                    {QUICK_QUESTIONS.map((q, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSend(q.text)}
+                        className="text-xs font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 p-3 rounded-xl transition-all hover:shadow-sm text-left active:scale-95"
+                      >
+                        {q.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
+            
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-slate-100 flex gap-1.5 items-center">
@@ -131,10 +158,13 @@ const Chatbot: React.FC = () => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Napišite pitanje..."
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
                 className="flex-1 bg-transparent outline-none text-sm text-slate-700 placeholder-slate-400"
               />
               <button 
-                onClick={handleSend}
+                onClick={() => handleSend()}
                 disabled={isLoading || !input.trim()}
                 className={`p-2 rounded-full transition-all ${
                   !input.trim() 

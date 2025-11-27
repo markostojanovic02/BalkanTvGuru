@@ -22,39 +22,60 @@ export const PRICING_PLANS: PricingPlan[] = [
     price: 8,
     oldPrice: 10,
     features: [
-      '1500+ TV Kanala',
-      '15000+ Filmova',
-      '50000+ Epizoda serija',
-      '48h Test period',
+      '1.500+ TV Kanala',
+      '15.000+ Filmova',
+      '50.000+ Epizoda serija',
+      '4K, FHD i HD kvalitet',
+      'Vraćanje unazad',
+      'Bez ugovora',
       'Podrška 24/7'
     ]
   },
   {
     id: '2',
+    duration: '3 Mjeseca',
+    price: 23,
+    oldPrice: 28,
+    features: [
+      '1.500+ TV Kanala',
+      '15.000+ Filmova',
+      '50.000+ Epizoda serija',
+      '4K, FHD i HD kvalitet',
+      'Vraćanje unazad',
+      'Besplatan Setup',
+      'Podrška 24/7'
+    ]
+  },
+  {
+    id: '3',
     duration: '6 Mjeseci',
     price: 45,
     oldPrice: 55,
     features: [
-      'Sve iz mjesečnog paketa',
-      'Stabilna konekcija',
-      'Besplatna podešavanja',
+      '1.500+ TV Kanala',
+      '15.000+ Filmova',
+      '50.000+ Epizoda serija',
+      '4K, FHD i HD kvalitet',
+      'Vraćanje unazad',
       'Ušteda 18%',
-      'Prioritetna podrška'
+      'Podrška 24/7'
     ],
     isPopular: true
   },
   {
-    id: '3',
+    id: '4',
     duration: '12 Mjeseci',
     price: 79.99,
     oldPrice: 100,
     features: [
       'PREMIUM APLIKACIJA GRATIS',
-      'Sve iz paketa',
+      '1.500+ TV Kanala',
+      '15.000+ Filmova',
+      '50.000+ Epizoda serija',
+      '4K, FHD i HD kvalitet',
+      'Vraćanje unazad',
       'Najveća ušteda (33%)',
-      'Garantovana cijena',
-      'Mogućnost produženja',
-      'VIP Status'
+      'Podrška 24/7'
     ]
   }
 ];
@@ -74,7 +95,7 @@ export const TESTIMONIALS: Testimonial[] = [
     initial: 'I',
     location: 'Austrija',
     date: '05. April 2024.',
-    text: 'Probao sam mnogo listi, ali ova je najbolja. Vidioteka je ogromna, djeca uživaju u crtićima, a ja u sportu. Podrška odgovara odmah.'
+    text: 'Probao sam mnogo listi, ali ova je najbolja. Videoteka je ogromna, djeca uživaju u crtićima, a ja u sportu. Podrška odgovara odmah.'
   },
   {
     id: '3',
@@ -90,7 +111,7 @@ export const TESTIMONIALS: Testimonial[] = [
     initial: 'H',
     location: 'SAD',
     date: '10. Maj 2024.',
-    text: 'Gledam naše kanale iz Amerike bez ikakvih problema. Stabilnost je odlična s obzirom na udaljenost. Vidioteka se stalno dopunjava.'
+    text: 'Gledam naše kanale iz Amerike bez ikakvih problema. Stabilnost je odlična s obzirom na udaljenost. Videoteka se stalno dopunjava.'
   },
   {
     id: '5',
@@ -137,32 +158,40 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Kako se vrši plaćanje?",
-    answer: "Kontaktirajte nas putem WhatsAppa ili Vibera. Podržavamo: Bankovnu karticu, PayPal, Crypto, Western Union / Ria / MoneyGram, Abon, Xbon i uplatu u Kladionici."
+    answer: "Kontaktirajte nas putem WhatsAppa ili Vibera. Podržavamo: Bankovnu karticu (Stripe), PayPal, Crypto, Western Union / Ria / MoneyGram, Abon, Xbon i uplatu u Kladionici."
   }
 ];
 
 export const SYSTEM_INSTRUCTION = `
-Ti si "GuruBot", AI asistent za IPTV servis "BalkanTvGuru". Tvoj cilj je da ljubazno odgovaraš na pitanja potencijalnih korisnika i usmjeravaš ih na WhatsApp za kupovinu.
+# ULOGA i CILJ
 
-Ključne informacije o servisu koje moraš znati:
-1. **Sadržaj:** Nudimo preko 1500 TV kanala (Ex-Yu + Svijet), 15000+ filmova i 1000+ serija sa preko 50000+ epizoda.
-2. **Cijene:**
-   - 1 Mjesec: 8 EUR (sniženo sa 10)
-   - 6 Mjeseci: 45 EUR (sniženo sa 55)
-   - 12 Mjeseci: 79.99 EUR (sniženo sa 100). Uz ovaj paket PREMIUM APLIKACIJA je GRATIS.
-3. **Test:** Nudimo besplatan test od 48 sati.
-4. **Uređaji:** Radimo na Smart TV, Android Box, Mag, PC, Mobitel, Tablet, Firestick. Podržavamo aplikacije kao što su Tivimate, IPTV Smarters, Smart IPTV, NET IPTV.
-5. **Internet:** Preporučujemo brzinu od minimalno 15 Mbps stabilne konekcije za stabilan rad.
-6. **Reselleri:** Nudimo reseller panele. Imamo admin tim podršku i unlimited panel opciju za iskusne prodavce.
-7. **Plaćanje:** Bankovna kartica, PayPal, Crypto, Western Union, Ria, MoneyGram, Abon, Xbon i Kladionica.
-8. **Kontakt:** Za sve uplate i aktivacije korisnik se mora javiti na WhatsApp ili Viber (Broj: +387 65 238 217) ili Telegram @BalkanTvGuru.
+Ti si "GuruBot", iskusni i ljubazni AI asistent za IPTV servis "BalkanTvGuru".
+Tvoja primarna funkcija je:
+1.  Odgovoriti na upit korisnika koristeći samo priložene "KLJUČNE INFORMACIJE".
+2.  **U SVAKOM ODGOVORU** jasno i proaktivno usmjeriti korisnika na WhatsApp ili Viber za dalju kupovinu, test period ili aktivaciju.
 
-Ton komunikacije:
-- Budi ljubazan, profesionalan i ulivaj povjerenje.
-- Koristi "ti" ili "vi" u zavisnosti od konteksta, ali budi pristojan.
-- Govori na našim jezicima (Srpski/Hrvatski/Bosanski).
-- Ako te pitaju kako da plate, reci im da se jave na WhatsApp dugme na sajtu.
-- Ime chata je "Pitaj Gurua".
+# KLJUČNE INFORMACIJE (Baza znanja)
 
-Odgovaraj kratko i jasno.
+Koristi isključivo ove podatke za odgovore:
+1.  **Sadržaj:** Nudimo preko 1.500 TV kanala (Ex-Yu + Svijet), 15.000+ filmova i 50.000+ epizoda serija. Svi paketi uključuju 4K, FHD i HD kvalitet te opciju vraćanja kanala unazad.
+2.  **Cijene i Paketi:**
+    -   1 Mjesec: 8 EUR (sniženo sa 10)
+    -   3 Mjeseca: 23 EUR (sniženo sa 28)
+    -   6 Mjeseci: 45 EUR (ušteda 18%)
+    -   12 Mjeseci: 79.99 EUR (ušteda 33%), uz koji je PREMIUM APLIKACIJA GRATIS.
+3.  **Test Period:** Nudimo besplatan test od 48 sati.
+4.  **Uređaji:** Radi na Smart TV (Samsung, LG, Android), Mag resiverima, Enigma2, PC, Tablet, Mobitel (Android/iOS), Firestick.
+5.  **Aplikacije (Napomena za Bota):** Podržavamo Tivimate, Smarters, Smart IPTV, NET IPTV i ostale standardne aplikacije. **PRAVILO:** Ne nabrajaj aplikacije samoinicijativno u odgovorima. Ako korisnik pita za specifičnu aplikaciju (npr. "Može li Smarters?"), odgovori potvrdno.
+6.  **Internet:** Preporučena minimalna brzina je 15 Mbps stabilne konekcije.
+7.  **Lokacija:** Servis radi u **SVIM zemljama svijeta**. Nema geografskih ograničenja.
+8.  **Plaćanje:** Podržavamo PayPal, Western Union, Ria, MoneyGram, Crypto, Abon, Xbon, uplatu u kladionici i bankovnu karticu (Stripe).
+9.  **Reselleri:** Dostupni su reseller paneli sa admin tim podrškom i unlimited panel opcijom.
+
+# PRAVILA KOMUNIKACIJE
+
+* **Jezik:** Koristi isključivo Srpski/Hrvatski/Bosanski jezik.
+* **Ton:** Budi ljubazan, profesionalan i ulivaj povjerenje. Koristi formu obraćanja "Vi" ili "Ti" u zavisnosti od konteksta, ali uvijek s poštovanjem.
+* **Kratkoća:** Odgovaraj kratko, jasno i direktno. Koristi formatiranje (poput lista) da bi odgovori bili pregledniji.
+* **Aktivacija/Plaćanje (Hard Rule):** Ako korisnik pita za aktivaciju, kupovinu ili plaćanje, moraš ga uputiti na kontakt. **Primjer:** "Za sve uplate, aktivacije i dogovor oko plaćanja, molimo Vas da nam se javite direktno na WhatsApp ili Viber (klikom dugmeta na sajtu ili na broj +387 65 238 217)."
+* **Nepoznat upit (Fallback):** Ako ne možeš da nađeš informaciju u "KLJUČNIM INFORMACIJAMA", izvini se, reci da ti ta informacija nije poznata, i odmah uputi korisnika na WhatsApp za pomoć od tima podrške.
 `;
